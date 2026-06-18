@@ -10,6 +10,11 @@ export default function Navbar() {
 
    const location = useLocation();
 
+   // Close mobile menu on route change
+   useEffect(() => {
+      setOpen(false);
+   }, [location.pathname]);
+
    // SHRINK ON SCROLL
    useEffect(() => {
       const handleScroll = () => {
@@ -36,7 +41,7 @@ export default function Navbar() {
          <div className="max-w-6xl mx-auto flex justify-between items-center px-6">
 
             {/* LOGO */}
-            <Link to="/" className="flex items-center gap-3">
+            <Link to="/" className="flex items-center gap-3 z-[60] relative">
                <img src={logo} alt="logo" className="w-35 h-16" />
                <div className="text-green-700 font-bold leading-tight text-sm md:text-base">
                   Right Aid Health Foundation
@@ -63,7 +68,7 @@ export default function Navbar() {
                            animate={{ opacity: 1, y: 0 }}
                            exit={{ opacity: 0, y: 10 }}
                            transition={{ duration: 0.2 }}
-                           className="absolute left-0 mt-3 w-[420px] bg-white shadow-2xl rounded-xl p-5 grid gap-4"
+                           className="absolute left-0 mt-3 w-[420px] bg-white shadow-2xl rounded-xl p-5 grid gap-4 z-50"
                         >
                            <div>
                               <h3 className="font-bold text-green-700">Mission & Vision</h3>
@@ -121,43 +126,74 @@ export default function Navbar() {
                </Link>
             </div>
 
-            {/* MOBILE BUTTON */}
+            {/* MOBILE HAMBURGER BUTTON */}
             <button
-               className="md:hidden text-2xl"
+               className="md:hidden text-2xl z-[60] relative p-2"
                onClick={() => setOpen(!open)}
+               aria-label="Toggle menu"
             >
-               ☰
+               {open ? "✕" : "☰"}
             </button>
          </div>
 
-         {/* MOBILE MENU */}
+         {/* MOBILE MENU OVERLAY */}
          <AnimatePresence>
             {open && (
-               <motion.div
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: "auto" }}
-                  exit={{ opacity: 0, height: 0 }}
-                  className="md:hidden flex flex-col gap-4 mt-4 px-6 pb-4 bg-white/90 backdrop-blur"
-               >
-                  <Link to="/" onClick={() => setOpen(false)}>Home</Link>
-                  <Link to="/about" onClick={() => setOpen(false)}>About</Link>
-                  <Link to="/services" onClick={() => setOpen(false)}>Services</Link>
-                  <Link to="/blog" onClick={() => setOpen(false)}>Blog</Link>
-                  <Link to="/gallery" onClick={() => setOpen(false)}>Gallery</Link>
-                  <Link to="/faq" onClick={() => setOpen(false)}>FAQ</Link>
-                  <Link to="/contact" onClick={() => setOpen(false)}>Contact</Link>
-                  <Link to="/volunteer" onClick={() => setOpen(false)}>Volunteer</Link>
-
-                  <Link
-                     to="/donate"
-                     className="bg-green-600 text-white px-4 py-2 rounded-lg w-fit"
+               <>
+                  {/* Backdrop */}
+                  <motion.div
+                     initial={{ opacity: 0 }}
+                     animate={{ opacity: 1 }}
+                     exit={{ opacity: 0 }}
+                     className="fixed inset-0 bg-black/30 z-40 md:hidden"
                      onClick={() => setOpen(false)}
+                  />
+
+                  {/* Mobile Menu Panel */}
+                  <motion.div
+                     initial={{ opacity: 0, x: "100%" }}
+                     animate={{ opacity: 1, x: 0 }}
+                     exit={{ opacity: 0, x: "100%" }}
+                     transition={{ type: "spring", damping: 25, stiffness: 200 }}
+                     className="fixed top-0 right-0 h-full w-[280px] bg-white shadow-2xl z-50 md:hidden flex flex-col pt-20 px-6 pb-6 overflow-y-auto"
                   >
-                     Donate
-                  </Link>
-               </motion.div>
+                     <div className="flex flex-col gap-1">
+                        <MobileLink to="/" label="Home" activeLink={activeLink} setOpen={setOpen} />
+                        <MobileLink to="/about" label="About" activeLink={activeLink} setOpen={setOpen} />
+                        <MobileLink to="/services" label="Services" activeLink={activeLink} setOpen={setOpen} />
+                        <MobileLink to="/blog" label="Blog" activeLink={activeLink} setOpen={setOpen} />
+                        <MobileLink to="/gallery" label="Gallery" activeLink={activeLink} setOpen={setOpen} />
+                        <MobileLink to="/faq" label="FAQ" activeLink={activeLink} setOpen={setOpen} />
+                        <MobileLink to="/contact" label="Contact" activeLink={activeLink} setOpen={setOpen} />
+                        <MobileLink to="/volunteer" label="Volunteer" activeLink={activeLink} setOpen={setOpen} />
+                     </div>
+
+                     <div className="mt-6 pt-6 border-t border-gray-200">
+                        <Link
+                           to="/donate"
+                           className="block w-full text-center bg-green-600 text-white px-4 py-3 rounded-lg hover:bg-green-700 transition font-semibold"
+                           onClick={() => setOpen(false)}
+                        >
+                           Donate Now
+                        </Link>
+                     </div>
+                  </motion.div>
+               </>
             )}
          </AnimatePresence>
       </motion.nav>
+   );
+}
+
+// Helper component for mobile links to ensure clicks work properly
+function MobileLink({ to, label, activeLink, setOpen }) {
+   return (
+      <Link
+         to={to}
+         className={`block py-3 px-4 rounded-lg text-base font-medium transition-colors ${activeLink(to)} hover:bg-gray-50`}
+         onClick={() => setOpen(false)}
+      >
+         {label}
+      </Link>
    );
 }
