@@ -1,21 +1,21 @@
 import { Link } from "react-router-dom";
 
 // ✅ LOCAL IMAGES IMPORTED
-import medicalImg from "../assets/about/medcon.jpg";
-import surgeryImg from "../assets/about/surgout.jpg";
+import medicalImg from "../assets/about/kidney.jpg";
+import surgeryImg from "../assets/about/Medical Outreach.jpg";
 import dentalImg from "../assets/about/dentcare.jpg";
-import socialImg from "../assets/about/socialmedia.jpg";
+import socialImg from "../assets/about/media mana.jpg";
 
 export default function WhatWeDoSection() {
 
    const services = [
       {
-         title: "Medical Consultation & Counselling",
+         title: "World Kidney Day April 4, 2025",
          desc: "Free medical assessments, health education, and chronic disease guidance to improve community health outcomes.",
          img: medicalImg,
       },
       {
-         title: "Surgical Outreach Programs",
+         title: "Medical Outreach Programs, Nov 12, 2022",
          desc: "Life-saving surgeries delivered directly to communities, covering general surgery and emergency interventions.",
          img: surgeryImg,
       },
@@ -25,7 +25,7 @@ export default function WhatWeDoSection() {
          img: dentalImg,
       },
       {
-         title: "Social Media Management",
+         title: "Right Aid Health Foundation Annual Health Outreach, August 2024.",
          desc: "Boost engagement and drive conversions with targeted digital outreach and awareness campaigns.",
          img: socialImg,
       },

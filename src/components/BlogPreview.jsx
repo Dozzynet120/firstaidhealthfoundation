@@ -13,10 +13,11 @@ import {
    FaClock
 } from "react-icons/fa";
 
-// Local images from src/about/ — replace with your actual blog images
-import blogImg1 from "../assets/about/doc5.jfif";
-import blogImg2 from "../assets/about/doc4.jfif";
-import blogImg3 from "../assets/about/doc6.jfif";
+// Local images from src/assets/about/
+import blogImg1 from "../assets/about/1.jpg";
+import blogImg2 from "../assets/about/2.jpg";
+import blogImg3 from "../assets/about/3.jpg";
+import blogImg4 from "../assets/about/4.jpg";
 
 export default function BlogPreview() {
    const posts = [
@@ -64,6 +65,21 @@ export default function BlogPreview() {
          likes: 67,
          comments: 18,
          tags: ["Education", "Prevention", "Rural Health"]
+      },
+      {
+         id: 4,
+         title: "Maternal Care in Rural Communities",
+         desc: "Our antenatal and safe delivery programs have now reached over 2,500 mothers across 15 communities, significantly reducing maternal and infant mortality rates.",
+         image: blogImg4,
+         category: "Maternal Health",
+         author: "Dr. Ngozi Eze",
+         authorRole: "Obstetrician & Gynecologist",
+         date: "May 28, 2025",
+         readTime: "6 min read",
+         views: 1850,
+         likes: 132,
+         comments: 35,
+         tags: ["Maternal Health", "Safe Delivery", "Rural Care"]
       }
    ];
 
@@ -91,7 +107,7 @@ export default function BlogPreview() {
             </motion.div>
 
             {/* Blog Grid */}
-            <div className="grid md:grid-cols-3 gap-8">
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
 
                {posts.map((post, index) => (
                   <motion.article

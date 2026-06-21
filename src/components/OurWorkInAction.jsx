@@ -1,7 +1,7 @@
-import work1 from "../assets/about/doc.png";
-import work2 from "../assets/about/doc1.jfif";
-import work3 from "../assets/about/doc2.jfif";
-import work4 from "../assets/about/doc3.jfif";
+import work1 from "../assets/about/1.jpg";
+import work2 from "../assets/about/2.jpg";
+import work3 from "../assets/about/5.jpg";
+import work4 from "../assets/about/6.jpg";
 
 export default function OurWorkInAction() {
 

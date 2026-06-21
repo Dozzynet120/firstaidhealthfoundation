@@ -16,6 +16,7 @@ import {
    getDocs
 } from "firebase/firestore";
 import { db } from "../assets/firebase/firebase.js";
+import logo from "../assets/about/logo.svg";
 import {
    FaUsers,
    FaSearch,
@@ -91,14 +92,7 @@ function AdminLogin({ onLogin }) {
             className="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md border border-gray-100"
          >
             <div className="text-center mb-8">
-               <motion.div
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-                  className="w-20 h-20 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center mx-auto mb-5 shadow-lg"
-               >
-                  <FaUserShield className="text-3xl text-white" />
-               </motion.div>
+               <img src={logo} alt="RightAid Health Foundation" className="mx-auto w-[170px] h-auto mb-4" />
                <h2 className="text-2xl font-bold text-gray-800">Admin Portal</h2>
                <p className="text-gray-500 text-sm mt-1">RightAid Health Foundation</p>
             </div>
@@ -244,10 +238,10 @@ function VolunteerRow({ volunteer, onStatusChange, onDelete, onMessage, index })
                   <div className="flex items-center gap-2 flex-wrap">
                      <h3 className="font-bold text-gray-800 text-sm md:text-base truncate">{volunteer.name}</h3>
                      <span className={`text-[10px] md:text-xs px-2 py-0.5 rounded-full font-medium ${volunteer.status === "active"
-                           ? "bg-green-100 text-green-700"
-                           : volunteer.status === "inactive"
-                              ? "bg-red-100 text-red-700"
-                              : "bg-amber-100 text-amber-700"
+                        ? "bg-green-100 text-green-700"
+                        : volunteer.status === "inactive"
+                           ? "bg-red-100 text-red-700"
+                           : "bg-amber-100 text-amber-700"
                         }`}>
                         {volunteer.status || "pending"}
                      </span>
@@ -317,8 +311,8 @@ function VolunteerRow({ volunteer, onStatusChange, onDelete, onMessage, index })
                            whileTap={{ scale: 0.95 }}
                            onClick={(e) => { e.stopPropagation(); onStatusChange(volunteer.firebaseId, volunteer.status === "active" ? "inactive" : "active"); }}
                            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition ${volunteer.status === "active"
-                                 ? "bg-red-50 text-red-600 hover:bg-red-100"
-                                 : "bg-green-50 text-green-600 hover:bg-green-100"
+                              ? "bg-red-50 text-red-600 hover:bg-red-100"
+                              : "bg-green-50 text-green-600 hover:bg-green-100"
                               }`}
                         >
                            {volunteer.status === "active" ? <><FaTimesCircle /> Deactivate</> : <><FaCheckCircle /> Activate</>}
@@ -826,8 +820,8 @@ export default function AdminDashboard() {
                               key={status}
                               onClick={() => setFilterStatus(status)}
                               className={`px-3 py-2 rounded-lg text-xs font-semibold capitalize whitespace-nowrap transition ${filterStatus === status
-                                    ? "bg-green-600 text-white shadow-md shadow-green-200"
-                                    : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                                 ? "bg-green-600 text-white shadow-md shadow-green-200"
+                                 : "bg-gray-100 text-gray-600 hover:bg-gray-200"
                                  }`}
                            >
                               {status}

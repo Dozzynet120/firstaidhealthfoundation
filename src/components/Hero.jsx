@@ -1,49 +1,80 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 
-import video1 from "../assets/hero/video.mp4";
-import video2 from "../assets/hero/video1.mp4";
-import video3 from "../assets/hero/video2.mp4";
-import video4 from "../assets/hero/video8.mp4";
-import video5 from "../assets/hero/video4.mp4";
-import video6 from "../assets/hero/video5.mp4";
-import video7 from "../assets/hero/video6.mp4";
-import video8 from "../assets/hero/video7.mp4";
+import video from "../assets/hero/video10.mp4";
 
 export default function Hero() {
+   const videoRef = useRef(null);
+   const [isPlaying, setIsPlaying] = useState(true);
+   const [showControls, setShowControls] = useState(false);
 
-   const videos = [video1, video2, video3, video4, video5, video6, video7, video8];
-   const [current, setCurrent] = useState(0);
-
-   // CHANGE VIDEO EVERY 5 SECONDS
+   // AUTO-PAUSE AFTER 2 MINUTES 3 SECONDS (123,000 ms)
    useEffect(() => {
-      const interval = setInterval(() => {
-         setCurrent((prev) => (prev + 1) % videos.length);
-      }, 5000);
+      const timer = setTimeout(() => {
+         if (videoRef.current) {
+            videoRef.current.pause();
+            setIsPlaying(false);
+         }
+      }, 123000); // 2 mins 3 secs = 123,000 ms
 
-      return () => clearInterval(interval);
+      return () => clearTimeout(timer);
    }, []);
 
-   return (
-      <section className="relative h-[100vh] w-full overflow-hidden">
+   // TOGGLE PLAY / PAUSE
+   const togglePlay = () => {
+      if (videoRef.current) {
+         if (videoRef.current.paused) {
+            videoRef.current.play();
+            setIsPlaying(true);
+         } else {
+            videoRef.current.pause();
+            setIsPlaying(false);
+         }
+      }
+   };
 
-         {/* BACKGROUND VIDEOS */}
-         {videos.map((vid, index) => (
-            <video
-               key={index}
-               className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${index === current ? "opacity-100" : "opacity-0"
-                  }`}
-               autoPlay
-               loop
-               muted
-               playsInline
-            >
-               <source src={vid} type="video/mp4" />
-            </video>
-         ))}
+   return (
+      <section
+         className="relative h-[100vh] w-full overflow-hidden"
+         onMouseEnter={() => setShowControls(true)}
+         onMouseLeave={() => setShowControls(false)}
+      >
+
+         {/* SINGLE BACKGROUND VIDEO WITH AUDIO */}
+         <video
+            ref={videoRef}
+            className="absolute inset-0 w-full h-full object-cover"
+            autoPlay
+            muted={false}          // AUDIO ENABLED
+            loop={false}           // NO LOOP — plays once
+            playsInline
+            onClick={togglePlay}   // CLICK VIDEO TO PLAY/PAUSE
+         >
+            <source src={video} type="video/mp4" />
+            Your browser does not support the video tag.
+         </video>
 
          {/* DARK OVERLAY */}
          <div className="absolute inset-0 bg-black/60"></div>
+
+         {/* PLAY / PAUSE CONTROLS (SHOW ON HOVER) */}
+         <div className={`absolute inset-0 z-20 flex items-center justify-center transition-opacity duration-300 ${showControls ? "opacity-100" : "opacity-0"}`}>
+            <button
+               onClick={togglePlay}
+               className="bg-white/20 hover:bg-white/40 backdrop-blur-sm rounded-full p-4 transition-all duration-300 border border-white/30"
+               aria-label={isPlaying ? "Pause video" : "Play video"}
+            >
+               {isPlaying ? (
+                  <svg className="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 24 24">
+                     <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z" />
+                  </svg>
+               ) : (
+                  <svg className="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 24 24">
+                     <path d="M8 5v14l11-7z" />
+                  </svg>
+               )}
+            </button>
+         </div>
 
          {/* CONTENT */}
          <div className="relative z-10 flex flex-col items-center justify-center h-full text-center text-white px-6">

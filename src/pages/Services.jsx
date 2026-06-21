@@ -29,9 +29,24 @@ import {
    FaHandsHelping,
    FaGlobeAfrica,
    FaChartLine,
+   FaPills,
+   FaWheelchair,
+   FaLungs,
 } from "react-icons/fa";
 
 import { motion } from "framer-motion";
+
+// Import your local images (10 images from src/assets/about/)
+import aboutImg1 from "../assets/about/1.jpg";
+import aboutImg2 from "../assets/about/2.jpg";
+import aboutImg3 from "../assets/about/3.jpg";
+import aboutImg4 from "../assets/about/4.jpg";
+import aboutImg5 from "../assets/about/5.jpg";
+import aboutImg6 from "../assets/about/6.jpg";
+import aboutImg7 from "../assets/about/7.jpg";
+import aboutImg8 from "../assets/about/8.jpg";
+import aboutImg9 from "../assets/about/9.jpg";
+import aboutImg10 from "../assets/about/10.jpg";
 
 export default function Services() {
 
@@ -65,28 +80,54 @@ export default function Services() {
 
    const services = [
       {
-         title: "Medical Consultation & Counselling",
-         desc: "Free medical assessments, health education, chronic disease guidance.",
+         title: "General Medical Consultation & Counselling",
          icon: <FaStethoscope />,
-         img: "https://images.unsplash.com/photo-1580281657527-47f249e8f6b0",
+         img: aboutImg1,
       },
       {
          title: "Surgical Outreach Programs",
-         desc: "Life-saving surgeries delivered directly to rural communities.",
          icon: <FaProcedures />,
-         img: "https://images.unsplash.com/photo-1584362917165-526a968579e8",
+         img: aboutImg2,
       },
       {
-         title: "Dental & Oral Health Care",
-         desc: "Preventive and corrective dental services and oral health education.",
+         title: "Pharmacy",
          icon: <FaTooth />,
-         img: "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5",
+         img: aboutImg3,
       },
       {
-         title: "Health Awareness Campaigns",
-         desc: "Community education and health awareness programs.",
+         title: "Med. Lab/ Diagnostic Services",
          icon: <FaBullhorn />,
-         img: "https://images.unsplash.com/photo-1584515933487-779824d29309",
+         img: aboutImg4,
+      },
+      {
+         title: "Cervical screening",
+         icon: <FaPills />,
+         img: aboutImg5,
+      },
+      {
+         title: "Health Education",
+         icon: <FaWheelchair />,
+         img: aboutImg6,
+      },
+      {
+         title: "Eye Cataract",
+         icon: <FaEye />,
+         img: aboutImg7,
+      },
+      {
+         title: "Fibroid",
+         icon: <FaLungs />,
+         img: aboutImg8,
+      },
+      {
+         title: "Goitre",
+         icon: <FaHeartbeat />,
+         img: aboutImg9,
+      },
+      {
+         title: "Breast Cancer",
+         icon: <FaSyringe />,
+         img: aboutImg10,
       },
    ];
 
@@ -196,19 +237,22 @@ export default function Services() {
          quote: "RightAid's surgical team saved my father's life with a free hernia operation. We had no money for hospital bills.",
          name: "Grace Emmanuel",
          role: "Beneficiary",
-         location: "Benue State"
+         location: "Benue State",
+         img: aboutImg5,
       },
       {
          quote: "The vaccination program protected all the children in our village. No child has had measles since their visit.",
          name: "Alhaji Musa Ibrahim",
          role: "Community Leader",
-         location: "Katsina State"
+         location: "Katsina State",
+         img: aboutImg6,
       },
       {
          quote: "As a volunteer nurse, I've seen how RightAid transforms communities. Their approach is professional and compassionate.",
          name: "Nurse Fatima Bello",
          role: "Volunteer",
-         location: "Kaduna State"
+         location: "Kaduna State",
+         img: aboutImg7,
       }
    ];
 
@@ -304,7 +348,7 @@ export default function Services() {
                </div>
             </div>
 
-            {/* SERVICES GRID (ORIGINAL) */}
+            {/* SERVICES GRID - 10 IMAGES */}
             <div className="px-6 pb-20">
                <div className="max-w-6xl mx-auto">
                   <motion.div
@@ -319,7 +363,7 @@ export default function Services() {
                      </p>
                   </motion.div>
 
-                  <div className="grid md:grid-cols-2 gap-8">
+                  <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
 
                      {services.map((s, i) => (
                         <motion.div
@@ -327,29 +371,29 @@ export default function Services() {
                            initial={{ opacity: 0, scale: 0.95 }}
                            whileInView={{ opacity: 1, scale: 1 }}
                            viewport={{ once: true }}
-                           transition={{ delay: i * 0.15 }}
-                           className="relative rounded-xl overflow-hidden shadow-lg group"
+                           transition={{ delay: i * 0.1 }}
+                           className="relative rounded-xl overflow-hidden shadow-lg group aspect-[4/3]"
                         >
 
                            <img
                               src={s.img}
                               alt={s.title}
-                              className="w-full h-72 object-cover group-hover:scale-110 transition duration-500"
+                              className="w-full h-full object-cover group-hover:scale-110 transition duration-500"
                            />
 
                            <div className="absolute inset-0 bg-black/50 group-hover:bg-black/70 transition"></div>
 
-                           <div className="absolute bottom-0 p-6 text-white">
+                           <div className="absolute bottom-0 p-5 text-white">
 
                               <div className="text-green-300 text-2xl mb-2">
                                  {s.icon}
                               </div>
 
-                              <h2 className="text-xl font-bold">
+                              <h2 className="text-lg font-bold">
                                  {s.title}
                               </h2>
 
-                              <p className="text-sm text-gray-200 mt-2">
+                              <p className="text-sm text-gray-200 mt-1 line-clamp-2">
                                  {s.desc}
                               </p>
 
@@ -563,7 +607,7 @@ export default function Services() {
                </div>
             </div>
 
-            {/* TESTIMONIALS */}
+            {/* TESTIMONIALS WITH IMAGES */}
             <div className="bg-white px-6 py-20">
                <div className="max-w-6xl mx-auto">
                   <motion.div
@@ -586,19 +630,28 @@ export default function Services() {
                            whileInView={{ opacity: 1, y: 0 }}
                            viewport={{ once: true }}
                            transition={{ duration: 0.5, delay: index * 0.15 }}
-                           className="bg-gray-50 p-8 rounded-xl border border-gray-100"
+                           className="bg-gray-50 rounded-xl border border-gray-100 overflow-hidden"
                         >
-                           <FaQuoteLeft className="text-green-200 text-2xl mb-4" />
-                           <p className="text-gray-700 italic leading-relaxed mb-6">
-                              {item.quote}
-                           </p>
-                           <FaQuoteRight className="text-green-200 text-2xl ml-auto mb-4" />
-                           <div className="pt-4 border-t border-gray-200">
-                              <h4 className="font-bold text-gray-800">{item.name}</h4>
-                              <p className="text-green-600 text-sm">{item.role}</p>
-                              <div className="flex items-center gap-2 text-gray-500 text-sm mt-1">
-                                 <FaMapMarkerAlt />
-                                 <span>{item.location}</span>
+                           <div className="h-48 overflow-hidden">
+                              <img
+                                 src={item.img}
+                                 alt={item.name}
+                                 className="w-full h-full object-cover"
+                              />
+                           </div>
+                           <div className="p-6">
+                              <FaQuoteLeft className="text-green-200 text-2xl mb-4" />
+                              <p className="text-gray-700 italic leading-relaxed mb-6">
+                                 {item.quote}
+                              </p>
+                              <FaQuoteRight className="text-green-200 text-2xl ml-auto mb-4" />
+                              <div className="pt-4 border-t border-gray-200">
+                                 <h4 className="font-bold text-gray-800">{item.name}</h4>
+                                 <p className="text-green-600 text-sm">{item.role}</p>
+                                 <div className="flex items-center gap-2 text-gray-500 text-sm mt-1">
+                                    <FaMapMarkerAlt />
+                                    <span>{item.location}</span>
+                                 </div>
                               </div>
                            </div>
                         </motion.div>

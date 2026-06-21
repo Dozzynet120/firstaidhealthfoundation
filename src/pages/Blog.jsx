@@ -1,6 +1,6 @@
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
    FaCalendarAlt,
@@ -25,8 +25,27 @@ import {
    FaBaby,
    FaBrain,
    FaProcedures,
-   FaBullhorn
+   FaBullhorn,
+   FaPlay,
+   FaPause,
+   FaVolumeUp,
+   FaVolumeMute
 } from "react-icons/fa";
+
+// Local images from src/assets/about/
+import blogImg1 from "../assets/about/1.jpg";
+import blogImg2 from "../assets/about/2.jpg";
+import blogImg3 from "../assets/about/3.jpg";
+import blogImg4 from "../assets/about/4.jpg";
+import blogImg5 from "../assets/about/5.jpg";
+import blogImg6 from "../assets/about/6.jpg";
+import blogImg7 from "../assets/about/7.jpg";
+import blogImg8 from "../assets/about/8.jpg";
+import blogImg9 from "../assets/about/9.jpg";
+import blogImg10 from "../assets/about/10.jpg";
+
+// Hero video
+import heroVideo from "../assets/about/00.mp4";
 
 // ============================================
 // BLOG DATA (20+ Posts)
@@ -37,10 +56,10 @@ const blogs = [
       title: "Combating Malaria in Rural Nigeria: Our 2025 Outreach Results",
       excerpt: "A comprehensive look at how our medical teams reached over 5,000 patients in malaria-endemic regions, providing testing, treatment, and prevention education.",
       content: "Malaria remains one of the leading causes of death in Nigeria, particularly in rural communities with limited access to healthcare...",
-      image: "https://images.unsplash.com/photo-1584515933487-779824d29309?w=800",
+      image: blogImg1,
       category: "Medical Outreach",
       author: "Dr. Chinedu Okonkwo",
-      authorAvatar: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=100",
+      authorAvatar: blogImg1,
       date: "2025-05-15",
       readTime: "8 min read",
       views: 1240,
@@ -54,10 +73,10 @@ const blogs = [
       title: "Free Cataract Surgery Campaign Restores Vision to 300 Nigerians",
       excerpt: "Our ophthalmic surgical team completed a landmark 2-week campaign in Kano State, performing free cataract removals for elderly patients.",
       content: "Vision loss from cataracts affects millions of Nigerians over 60, yet simple surgery can restore sight within minutes...",
-      image: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=800",
+      image: blogImg2,
       category: "Surgery",
       author: "Dr. Amina Ibrahim",
-      authorAvatar: "https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=100",
+      authorAvatar: blogImg2,
       date: "2025-04-28",
       readTime: "6 min read",
       views: 2100,
@@ -71,10 +90,10 @@ const blogs = [
       title: "The State of Maternal Health in Northern Nigeria",
       excerpt: "Exploring the challenges facing pregnant women in remote communities and how RightAid is working to reduce maternal mortality rates.",
       content: "Nigeria accounts for nearly 20% of global maternal deaths, with northern states bearing the highest burden...",
-      image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800",
+      image: blogImg3,
       category: "Maternal Health",
       author: "Nurse Fatima Bello",
-      authorAvatar: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=100",
+      authorAvatar: blogImg3,
       date: "2025-04-10",
       readTime: "10 min read",
       views: 980,
@@ -88,10 +107,10 @@ const blogs = [
       title: "Volunteer Spotlight: Meet the Doctors Saving Lives in Borno",
       excerpt: "An inside look at the dedicated medical volunteers working in conflict-affected regions of Northeast Nigeria.",
       content: "Dr. Emmanuel Ojo and his team have spent the last 18 months providing critical care in IDP camps across Borno State...",
-      image: "https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=800",
+      image: blogImg4,
       category: "Volunteer Stories",
       author: "Grace Emmanuel",
-      authorAvatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100",
+      authorAvatar: blogImg4,
       date: "2025-03-22",
       readTime: "7 min read",
       views: 1560,
@@ -105,10 +124,10 @@ const blogs = [
       title: "COVID-19 Vaccination Drive: Reaching the Unreached",
       excerpt: "How our mobile vaccination teams brought COVID-19 vaccines to remote villages with zero prior access to immunization services.",
       content: "When the COVID-19 vaccine became available in Nigeria, urban centers were prioritized, leaving rural communities behind...",
-      image: "https://images.unsplash.com/photo-1584551246675-2b6525d76e37?w=800",
+      image: blogImg5,
       category: "Immunization",
       author: "Dr. Chinedu Okonkwo",
-      authorAvatar: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=100",
+      authorAvatar: blogImg5,
       date: "2025-03-08",
       readTime: "5 min read",
       views: 1890,
@@ -122,10 +141,10 @@ const blogs = [
       title: "Mental Health in Nigerian Communities: Breaking the Silence",
       excerpt: "Addressing the stigma around mental illness and expanding access to counseling services in underserved areas.",
       content: "Mental health remains one of the most neglected areas of healthcare in Nigeria, with less than 10% of those in need receiving care...",
-      image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=800",
+      image: blogImg6,
       category: "Mental Health",
       author: "Dr. Amina Ibrahim",
-      authorAvatar: "https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=100",
+      authorAvatar: blogImg6,
       date: "2025-02-20",
       readTime: "9 min read",
       views: 760,
@@ -139,10 +158,10 @@ const blogs = [
       title: "Dental Health Outreach: Smiles Restored in Oyo State",
       excerpt: "Our dental team provided free extractions, fillings, and oral health education to over 800 patients in rural Oyo communities.",
       content: "Tooth decay and gum disease are prevalent in communities without access to dental care, leading to pain, infection, and lost productivity...",
-      image: "https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=800",
+      image: blogImg7,
       category: "Dental Care",
       author: "Dr. Tunde Bakare",
-      authorAvatar: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?w=100",
+      authorAvatar: blogImg7,
       date: "2025-02-14",
       readTime: "5 min read",
       views: 640,
@@ -156,10 +175,10 @@ const blogs = [
       title: "Emergency Response: How We Handled the 2024 Cholera Outbreak",
       excerpt: "A case study in rapid deployment and effective intervention during a public health emergency in Katsina State.",
       content: "When cholera cases began surging in Katsina in August 2024, our emergency response team was activated within 12 hours...",
-      image: "https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?w=800",
+      image: blogImg8,
       category: "Emergency Response",
       author: "Dr. Chinedu Okonkwo",
-      authorAvatar: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=100",
+      authorAvatar: blogImg8,
       date: "2025-01-30",
       readTime: "11 min read",
       views: 2340,
@@ -173,10 +192,10 @@ const blogs = [
       title: "Training Community Health Workers: A Sustainable Approach",
       excerpt: "Why investing in local health workers creates lasting impact beyond any single medical mission.",
       content: "Every community has individuals passionate about health. Our training program equips them with skills to serve their neighbors long after we leave...",
-      image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800",
+      image: blogImg9,
       category: "Health Education",
       author: "Nurse Fatima Bello",
-      authorAvatar: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=100",
+      authorAvatar: blogImg9,
       date: "2025-01-15",
       readTime: "7 min read",
       views: 890,
@@ -190,10 +209,10 @@ const blogs = [
       title: "Pediatric Surgery: Giving Children a Second Chance",
       excerpt: "Our pediatric surgical program has corrected congenital defects for over 200 children from low-income families.",
       content: "Children born with cleft lips, hernias, and other correctable conditions often face lifelong stigma and health complications...",
-      image: "https://images.unsplash.com/photo-1581056771107-24ca5f033842?w=800",
+      image: blogImg10,
       category: "Surgery",
       author: "Dr. Amina Ibrahim",
-      authorAvatar: "https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=100",
+      authorAvatar: blogImg10,
       date: "2024-12-20",
       readTime: "6 min read",
       views: 1120,
@@ -207,10 +226,10 @@ const blogs = [
       title: "Nutrition and Malnutrition: Feeding Programs in IDP Camps",
       excerpt: "Addressing severe acute malnutrition among displaced children through therapeutic feeding and nutrition education.",
       content: "In IDP camps across Borno, Adamawa, and Yobe, malnutrition rates among children under 5 exceed emergency thresholds...",
-      image: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=800",
+      image: blogImg1,
       category: "Nutrition",
       author: "Grace Emmanuel",
-      authorAvatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100",
+      authorAvatar: blogImg1,
       date: "2024-12-05",
       readTime: "8 min read",
       views: 730,
@@ -224,10 +243,10 @@ const blogs = [
       title: "The Role of Technology in Rural Healthcare Delivery",
       excerpt: "How telemedicine, mobile health apps, and digital records are transforming our ability to serve remote communities.",
       content: "Technology is bridging the gap between urban specialists and rural patients. Our telemedicine program connects village clinics with Lagos-based specialists...",
-      image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800",
+      image: blogImg2,
       category: "Innovation",
       author: "Dr. Tunde Bakare",
-      authorAvatar: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?w=100",
+      authorAvatar: blogImg2,
       date: "2024-11-18",
       readTime: "9 min read",
       views: 1450,
@@ -241,10 +260,10 @@ const blogs = [
       title: "World Health Day 2024: Our Commitment to Universal Health Coverage",
       excerpt: "Reflecting on our progress toward health for all and the road ahead for Nigeria's underserved populations.",
       content: "This World Health Day, we renewed our pledge to leave no community behind in the pursuit of quality healthcare...",
-      image: "https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?w=800",
+      image: blogImg3,
       category: "Awareness",
       author: "Dr. Chinedu Okonkwo",
-      authorAvatar: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=100",
+      authorAvatar: blogImg3,
       date: "2024-11-07",
       readTime: "4 min read",
       views: 560,
@@ -258,10 +277,10 @@ const blogs = [
       title: "Hernia Repair Campaign: 150 Surgeries in One Week",
       excerpt: "Our general surgery team set a new record during a week-long campaign in Niger State, transforming lives with simple procedures.",
       content: "Hernias are common in communities where heavy manual labor is the norm, yet surgical repair is often unaffordable...",
-      image: "https://images.unsplash.com/photo-1551076805-e1869033e561?w=800",
+      image: blogImg4,
       category: "Surgery",
       author: "Dr. Tunde Bakare",
-      authorAvatar: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?w=100",
+      authorAvatar: blogImg4,
       date: "2024-10-25",
       readTime: "6 min read",
       views: 870,
@@ -275,10 +294,10 @@ const blogs = [
       title: "Hygiene Education: Preventing Disease at the Source",
       excerpt: "How teaching proper handwashing and sanitation practices reduced diarrheal diseases by 60% in target communities.",
       content: "Prevention is always better than cure. Our hygiene education program has reached over 10,000 community members...",
-      image: "https://images.unsplash.com/photo-1584515933487-779824d29309?w=800",
+      image: blogImg5,
       category: "Health Education",
       author: "Nurse Fatima Bello",
-      authorAvatar: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=100",
+      authorAvatar: blogImg5,
       date: "2024-10-12",
       readTime: "5 min read",
       views: 520,
@@ -292,10 +311,10 @@ const blogs = [
       title: "Partner Spotlight: Collaborating with WHO Nigeria",
       excerpt: "How our partnership with the World Health Organization amplifies our impact and extends our reach to the most vulnerable.",
       content: "Since 2021, our collaboration with WHO Nigeria has enabled us to access funding, technical expertise, and global best practices...",
-      image: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=800",
+      image: blogImg6,
       category: "Partnerships",
       author: "Grace Emmanuel",
-      authorAvatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100",
+      authorAvatar: blogImg6,
       date: "2024-09-28",
       readTime: "7 min read",
       views: 680,
@@ -309,10 +328,10 @@ const blogs = [
       title: "Sickle Cell Awareness: Screening and Support Programs",
       excerpt: "Expanding newborn screening and creating support networks for families affected by sickle cell disease in Nigeria.",
       content: "Nigeria has the highest burden of sickle cell disease in the world. Early diagnosis and comprehensive care can dramatically improve outcomes...",
-      image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800",
+      image: blogImg7,
       category: "Awareness",
       author: "Dr. Amina Ibrahim",
-      authorAvatar: "https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=100",
+      authorAvatar: blogImg7,
       date: "2024-09-15",
       readTime: "8 min read",
       views: 920,
@@ -326,10 +345,10 @@ const blogs = [
       title: "Mobile Clinic Deployment: Healthcare on Wheels",
       excerpt: "Inside our fleet of fully equipped mobile clinics bringing diagnostics, treatment, and pharmacy services to remote areas.",
       content: "Our mobile clinics are hospitals on wheels, equipped with examination rooms, diagnostic equipment, and pharmacy supplies...",
-      image: "https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=800",
+      image: blogImg8,
       category: "Medical Outreach",
       author: "Dr. Tunde Bakare",
-      authorAvatar: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?w=100",
+      authorAvatar: blogImg8,
       date: "2024-08-30",
       readTime: "6 min read",
       views: 1050,
@@ -343,10 +362,10 @@ const blogs = [
       title: "Annual Report 2023: A Year of Milestones",
       excerpt: "Reviewing our achievements, challenges, and lessons learned as we expanded to serve 50+ communities across Nigeria.",
       content: "2023 was a transformative year for RightAid Health Foundation. We reached more patients, performed more surgeries, and trained more health workers than ever before...",
-      image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800",
+      image: blogImg9,
       category: "Reports",
       author: "Grace Emmanuel",
-      authorAvatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100",
+      authorAvatar: blogImg9,
       date: "2024-08-10",
       readTime: "12 min read",
       views: 3100,
@@ -360,10 +379,10 @@ const blogs = [
       title: "Youth Health Ambassadors: Empowering the Next Generation",
       excerpt: "Our school-based health education program trains young people to become health advocates in their communities.",
       content: "Adolescents and young adults are powerful agents of change. Our Youth Health Ambassador program equips them with knowledge and leadership skills...",
-      image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=800",
+      image: blogImg10,
       category: "Health Education",
       author: "Nurse Fatima Bello",
-      authorAvatar: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=100",
+      authorAvatar: blogImg10,
       date: "2024-07-22",
       readTime: "6 min read",
       views: 480,
@@ -394,6 +413,29 @@ export default function Blog() {
    const [selectedCategory, setSelectedCategory] = useState("All");
    const [currentPage, setCurrentPage] = useState(1);
    const [sortBy, setSortBy] = useState("newest");
+
+   // Video controls state
+   const videoRef = useRef(null);
+   const [isPlaying, setIsPlaying] = useState(false);
+   const [isMuted, setIsMuted] = useState(true);
+
+   const togglePlay = () => {
+      if (videoRef.current) {
+         if (isPlaying) {
+            videoRef.current.pause();
+         } else {
+            videoRef.current.play();
+         }
+         setIsPlaying(!isPlaying);
+      }
+   };
+
+   const toggleMute = () => {
+      if (videoRef.current) {
+         videoRef.current.muted = !isMuted;
+         setIsMuted(!isMuted);
+      }
+   };
 
    const filteredPosts = useMemo(() => {
       let result = [...blogs];
@@ -458,9 +500,22 @@ export default function Blog() {
 
          <div className="min-h-screen bg-gray-50">
 
-            {/* HERO SECTION */}
-            <section className="bg-green-700 text-white py-20 px-6">
-               <div className="max-w-6xl mx-auto text-center">
+            {/* HERO SECTION WITH VIDEO */}
+            <section className="relative bg-green-700 text-white py-20 px-6 overflow-hidden">
+               {/* Background Video */}
+               <video
+                  ref={videoRef}
+                  src={heroVideo}
+                  className="absolute inset-0 w-full h-full object-cover"
+                  loop
+                  playsInline
+                  muted
+                  onClick={togglePlay}
+               />
+               {/* Dark overlay for text readability */}
+               <div className="absolute inset-0 bg-black/50"></div>
+
+               <div className="relative max-w-6xl mx-auto text-center z-10">
                   <motion.div
                      initial={{ opacity: 0, y: 30 }}
                      animate={{ opacity: 1, y: 0 }}
@@ -485,6 +540,27 @@ export default function Blog() {
                         />
                      </div>
                   </motion.div>
+
+                  {/* Video Controls */}
+                  <div className="mt-8 flex items-center justify-center gap-4">
+                     {/* Play / Pause Button */}
+                     <button
+                        onClick={togglePlay}
+                        className="flex items-center gap-2 bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white px-5 py-2.5 rounded-full transition border border-white/30"
+                     >
+                        {isPlaying ? <FaPause /> : <FaPlay />}
+                        <span className="text-sm font-medium">{isPlaying ? "Pause" : "Play"}</span>
+                     </button>
+
+                     {/* Mute / Unmute Button */}
+                     <button
+                        onClick={toggleMute}
+                        className="flex items-center gap-2 bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white px-5 py-2.5 rounded-full transition border border-white/30"
+                     >
+                        {isMuted ? <FaVolumeMute /> : <FaVolumeUp />}
+                        <span className="text-sm font-medium">{isMuted ? "Unmute" : "Mute"}</span>
+                     </button>
+                  </div>
                </div>
             </section>
 
