@@ -5,7 +5,8 @@ import {
    FaInstagram,
    FaTwitter,
    FaYoutube,
-   FaWhatsapp
+   FaWhatsapp,
+   FaTiktok
 } from "react-icons/fa";
 
 export default function Footer() {
@@ -55,10 +56,21 @@ export default function Footer() {
 
                   {/* SOCIAL ICONS */}
                   <div className="flex gap-4 mt-5 text-xl text-gray-300">
-                     <FaFacebook className="hover:text-green-400 cursor-pointer" />
-                     <FaInstagram className="hover:text-green-400 cursor-pointer" />
-                     <FaTwitter className="hover:text-green-400 cursor-pointer" />
-                     <FaYoutube className="hover:text-green-400 cursor-pointer" />
+                     <a href="https://facebook.com/yourpage" target="_blank" rel="noopener noreferrer" className="hover:text-green-400 transition-colors">
+                        <FaFacebook />
+                     </a>
+                     <a href="https://instagram.com/yourpage" target="_blank" rel="noopener noreferrer" className="hover:text-green-400 transition-colors">
+                        <FaInstagram />
+                     </a>
+                     <a href="https://x.com/rightaid17?s=21" target="_blank" rel="noopener noreferrer" className="hover:text-green-400 transition-colors">
+                        <FaTwitter />
+                     </a>
+                     <a href="https://www.tiktok.com/@rightaidhealthfoundation" target="_blank" rel="noopener noreferrer" className="hover:text-green-400 transition-colors">
+                        <FaTiktok />
+                     </a>
+                     <a href="https://youtube.com/yourchannel" target="_blank" rel="noopener noreferrer" className="hover:text-green-400 transition-colors">
+                        <FaYoutube />
+                     </a>
                   </div>
                </div>
 
@@ -85,6 +97,10 @@ export default function Footer() {
                      <li>
                         📍 485 Agege Motor Rd, Mafoluku Oshodi,<br />
                         Lagos, Nigeria
+                     </li>
+                     <li>
+                        📍USA address
+                        800 Ingleside Avenue, Suute C1 Catonsville Maryland, 21228 USA,<br />
                      </li>
                   </ul>
                </div>

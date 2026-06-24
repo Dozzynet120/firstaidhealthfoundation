@@ -54,7 +54,7 @@ export default function Services() {
       {
          title: "Mission & Vision",
          icon: <FaHeartbeat />,
-         text: "To provide accessible healthcare and save lives in underserved communities.",
+         text: "At Right Aid Health Foundation, we are committed to delivering world-class charitable surgical and anaethesia services in low-resource communities. Our focus spans General Surgery, Paediatrics, Urology, Obstetrics, and Gynaecology, ensuring comprehensive care for those in need. We prioritize training healthcare professionals in perioperative care and strive to provide critical pain relief during surgery and labor, empowering communities with sustainable medical solutions.",
       },
       {
          title: "Who We Are",

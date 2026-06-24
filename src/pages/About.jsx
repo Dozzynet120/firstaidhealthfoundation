@@ -253,7 +253,7 @@ export default function About() {
                      <FaBullseye className="text-green-600 text-5xl mb-4" />
                      <h3 className="text-2xl font-bold mb-3">Our Mission</h3>
                      <p className="text-gray-600">
-                        To provide accessible healthcare and save lives in underserved communities through outreach, treatment, education, and surgical support.
+                        At Right Aid Health Foundation, we are committed to delivering world-class charitable surgical and anaethesia services in low-resource communities. Our focus spans General Surgery, Paediatrics, Urology, Obstetrics, and Gynaecology, ensuring comprehensive care for those in need. We prioritize training healthcare professionals in perioperative care and strive to provide critical pain relief during surgery and labor, empowering communities with sustainable medical solutions.
                      </p>
                   </div>
 
