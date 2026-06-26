@@ -2,25 +2,30 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import logo from "../assets/about/logo.svg";
 
+// Import your local images
+import aishaImg from "../assets/about/doc.png";
+import johnImg from "../assets/about/doc1.jfif";
+import maryImg from "../assets/about/doc2.jfif";
+
 export default function WhatPeopleSayAboutUs() {
 
    const testimonials = [
       {
          name: "Aisha Mohammed",
          role: "Beneficiary - Lagos Outreach",
-         img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2",
+         img: aishaImg,
          text: "RightAid Health Foundation gave me access to life-saving medical care when I had no hope. I am forever grateful.",
       },
       {
          name: "John Okafor",
          role: "Community Member - Surulere",
-         img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e",
+         img: johnImg,
          text: "Their medical outreach program brought free healthcare to our community. Many lives were saved.",
       },
       {
          name: "Mary Johnson",
          role: "Benefactor Partner",
-         img: "https://images.unsplash.com/photo-1554151228-14d9def656e4",
+         img: maryImg,
          text: "Supporting RightAid has been one of the most impactful decisions. Their transparency and results are outstanding.",
       },
    ];
