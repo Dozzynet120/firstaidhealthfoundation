@@ -28,9 +28,9 @@ import {
 } from "react-icons/fa";
 
 // local images (src/about/)
-import aboutImg1 from "../assets/about/doc5.jfif";
-import aboutImg2 from "../assets/about/doc4.jfif";
-import aboutImg3 from "../assets/about/doc6.jfif";
+import aboutImg1 from "../assets/about/img1.jpg";
+import aboutImg2 from "../assets/about/img2.jpg";
+import aboutImg3 from "../assets/about/img3.jpg";
 
 export default function About() {
 
